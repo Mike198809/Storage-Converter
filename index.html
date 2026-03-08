@@ -59,7 +59,8 @@ border:none;
 border-radius:6px;
 background:#334155;
 color:white;
-font-size:11px;
+font-size:12px;
+cursor:pointer;
 }
 
 .switch button.active{
@@ -90,7 +91,7 @@ border-radius:6px;
 border:none;
 background:#0f172a;
 color:white;
-font-size:13px;
+font-size:16px;
 border:2px solid transparent;
 }
 
@@ -111,10 +112,14 @@ border-radius:6px;
 text-align:center;
 font-size:16px;
 user-select:none;
+cursor:pointer;
+touch-action:manipulation;
+transition:0.1s;
 }
 
 .key:active{
 background:#3b82f6;
+transform:scale(0.95);
 }
 
 .clear{
