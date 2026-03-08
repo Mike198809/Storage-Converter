@@ -1,11 +1,19 @@
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no,
+viewport-fit=cover">
 
 <title>Conversor de almacenamiento</title>
 
@@ -18,6 +26,7 @@
 box-sizing:border-box;
 font-family:Arial, Helvetica, sans-serif;
 -webkit-tap-highlight-color:transparent;
+touch-action:manipulation;
 }
 
 body{
@@ -28,6 +37,7 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+overflow:hidden;
 }
 
 .container{
@@ -113,7 +123,6 @@ text-align:center;
 font-size:16px;
 user-select:none;
 cursor:pointer;
-touch-action:manipulation;
 transition:0.1s;
 }
 
@@ -292,8 +301,19 @@ document.getElementById("decimal").classList.add("active")
 document.getElementById("binario").classList.remove("active")
 }
 
+/* BLOQUEO TOTAL DE ZOOM */
+
+document.addEventListener('gesturestart', function (e) {
+e.preventDefault();
+});
+
+document.addEventListener('dblclick', function (e) {
+e.preventDefault();
+});
+
 </script>
 
 </body>
+
 </html>
 
