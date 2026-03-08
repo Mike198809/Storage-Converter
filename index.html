@@ -1,34 +1,37 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Conversor de almacenamiento</title>
 
-<link rel="icon" type="image/png" href="icon.png">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
 
 <style>
 
 *{
 box-sizing:border-box;
 font-family:Arial, Helvetica, sans-serif;
+-webkit-tap-highlight-color:transparent;
 }
 
 body{
 margin:0;
+padding:15px;
 background:#0f172a;
 color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
 }
 
 .container{
-width:380px;
+width:100%;
+max-width:420px;
+margin:auto;
 background:#1e293b;
 border-radius:15px;
 padding:20px;
@@ -37,8 +40,8 @@ box-shadow:0 10px 25px rgba(0,0,0,0.4);
 
 h1{
 text-align:center;
-margin-bottom:10px;
 font-size:22px;
+margin-bottom:15px;
 }
 
 .switch{
@@ -49,12 +52,13 @@ margin-bottom:15px;
 }
 
 .switch button{
-padding:6px 12px;
+padding:8px 14px;
 border:none;
 border-radius:6px;
 cursor:pointer;
 background:#334155;
 color:white;
+font-size:14px;
 }
 
 .switch button.active{
@@ -72,14 +76,13 @@ opacity:0.7;
 
 .field input{
 width:100%;
-padding:10px;
+padding:12px;
 border-radius:6px;
 border:none;
 background:#0f172a;
 color:white;
 font-size:16px;
-margin-top:3px;
-outline:none;
+margin-top:4px;
 border:2px solid transparent;
 }
 
@@ -92,16 +95,16 @@ box-shadow:0 0 6px #3b82f6;
 margin-top:15px;
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:8px;
+gap:10px;
 }
 
 .key{
-padding:14px;
+padding:18px;
 background:#334155;
 border-radius:8px;
 text-align:center;
 cursor:pointer;
-font-size:18px;
+font-size:22px;
 user-select:none;
 }
 
@@ -115,6 +118,7 @@ background:#ef4444;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -128,27 +132,33 @@ background:#ef4444;
 <button id="decimal">Decimal (1000)</button>
 </div>
 
-<div class="field"><label>Bits</label><input id="bits"></div>
-<div class="field"><label>Bytes</label><input id="bytes"></div>
-<div class="field"><label>KB</label><input id="kb"></div>
-<div class="field"><label>MB</label><input id="mb"></div>
-<div class="field"><label>GB</label><input id="gb"></div>
-<div class="field"><label>TB</label><input id="tb"></div>
+<div class="field"><label>Bits</label><input id="bits" readonly></div>
+<div class="field"><label>Bytes</label><input id="bytes" readonly></div>
+<div class="field"><label>KB</label><input id="kb" readonly></div>
+<div class="field"><label>MB</label><input id="mb" readonly></div>
+<div class="field"><label>GB</label><input id="gb" readonly></div>
+<div class="field"><label>TB</label><input id="tb" readonly></div>
 
 <div class="keypad">
+
 <div class="key">7</div>
 <div class="key">8</div>
 <div class="key">9</div>
+
 <div class="key">4</div>
 <div class="key">5</div>
 <div class="key">6</div>
+
 <div class="key">1</div>
 <div class="key">2</div>
 <div class="key">3</div>
+
 <div class="key">0</div>
 <div class="key">,</div>
 <div class="key">⌫</div>
+
 <div class="key clear">BORRAR</div>
+
 </div>
 
 </div>
@@ -180,11 +190,9 @@ function setActive(input){
 
 Object.values(inputs).forEach(i=>{
 i.classList.remove("active")
-i.readOnly=true
 })
 
 input.classList.add("active")
-input.readOnly=false
 activeInput = input
 replaceOnNextInput = true
 
@@ -192,16 +200,8 @@ replaceOnNextInput = true
 
 Object.values(inputs).forEach(input=>{
 
-input.addEventListener("focus",()=>{
-setActive(input)
-})
-
 input.addEventListener("click",()=>{
 setActive(input)
-})
-
-input.addEventListener("input",()=>{
-convert(input.id)
 })
 
 })
@@ -284,16 +284,10 @@ document.getElementById("decimal").classList.add("active")
 document.getElementById("binario").classList.remove("active")
 }
 
-document.addEventListener('dblclick',function(e){
-e.preventDefault()
-})
-
-document.addEventListener('gesturestart',function(e){
-e.preventDefault()
-})
-
 </script>
 
 </body>
 </html>
+```
+
 
