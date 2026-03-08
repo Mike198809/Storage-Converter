@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>Conversor de almacenamiento</title>
+
+<link rel="icon" type="image/png" href="icon.png">
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+margin:0;
+background:#0f172a;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+width:380px;
+background:#1e293b;
+border-radius:15px;
+padding:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+h1{
+text-align:center;
+margin-bottom:10px;
+font-size:22px;
+}
+
+.switch{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-bottom:15px;
+}
+
+.switch button{
+padding:6px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+background:#334155;
+color:white;
+}
+
+.switch button.active{
+background:#3b82f6;
+}
+
+.field{
+margin-bottom:10px;
+}
+
+.field label{
+font-size:12px;
+opacity:0.7;
+}
+
+.field input{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:none;
+background:#0f172a;
+color:white;
+font-size:16px;
+margin-top:3px;
+outline:none;
+border:2px solid transparent;
+}
+
+.field input.active{
+border-color:#3b82f6;
+box-shadow:0 0 6px #3b82f6;
+}
+
+.keypad{
+margin-top:15px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+
+.key{
+padding:14px;
+background:#334155;
+border-radius:8px;
+text-align:center;
+cursor:pointer;
+font-size:18px;
+user-select:none;
+}
+
+.key:active{
+background:#3b82f6;
+}
+
+.clear{
+grid-column:span 3;
+background:#ef4444;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Conversor de almacenamiento</h1>
+
+<div class="switch">
+<button id="binario" class="active">Binario (1024)</button>
+<button id="decimal">Decimal (1000)</button>
+</div>
+
+<div class="field"><label>Bits</label><input id="bits"></div>
+<div class="field"><label>Bytes</label><input id="bytes"></div>
+<div class="field"><label>KB</label><input id="kb"></div>
+<div class="field"><label>MB</label><input id="mb"></div>
+<div class="field"><label>GB</label><input id="gb"></div>
+<div class="field"><label>TB</label><input id="tb"></div>
+
+<div class="keypad">
+<div class="key">7</div>
+<div class="key">8</div>
+<div class="key">9</div>
+<div class="key">4</div>
+<div class="key">5</div>
+<div class="key">6</div>
+<div class="key">1</div>
+<div class="key">2</div>
+<div class="key">3</div>
+<div class="key">0</div>
+<div class="key">,</div>
+<div class="key">⌫</div>
+<div class="key clear">BORRAR</div>
+</div>
+
+</div>
+
+<script>
+
+let base = 1024
+let activeInput = null
+let replaceOnNextInput = false
+
+const inputs = {
+bits:document.getElementById("bits"),
+bytes:document.getElementById("bytes"),
+kb:document.getElementById("kb"),
+mb:document.getElementById("mb"),
+gb:document.getElementById("gb"),
+tb:document.getElementById("tb")
+}
+
+function format(num){
+return Number(num).toLocaleString('es-ES',{maximumFractionDigits:10})
+}
+
+function parseNumero(str){
+return parseFloat(str.replace(/\./g,'').replace(',','.'))
+}
+
+function setActive(input){
+
+Object.values(inputs).forEach(i=>{
+i.classList.remove("active")
+i.readOnly=true
+})
+
+input.classList.add("active")
+input.readOnly=false
+activeInput = input
+replaceOnNextInput = true
+
+}
+
+Object.values(inputs).forEach(input=>{
+
+input.addEventListener("focus",()=>{
+setActive(input)
+})
+
+input.addEventListener("click",()=>{
+setActive(input)
+})
+
+input.addEventListener("input",()=>{
+convert(input.id)
+})
+
+})
+
+function convert(unit){
+
+let value = parseNumero(inputs[unit].value)
+
+if(isNaN(value)) return
+
+let bytes
+
+switch(unit){
+
+case "bits": bytes=value/8; break
+case "bytes": bytes=value; break
+case "kb": bytes=value*Math.pow(base,1); break
+case "mb": bytes=value*Math.pow(base,2); break
+case "gb": bytes=value*Math.pow(base,3); break
+case "tb": bytes=value*Math.pow(base,4); break
+
+}
+
+inputs.bits.value = format(bytes*8)
+inputs.bytes.value = format(bytes)
+inputs.kb.value = format(bytes/Math.pow(base,1))
+inputs.mb.value = format(bytes/Math.pow(base,2))
+inputs.gb.value = format(bytes/Math.pow(base,3))
+inputs.tb.value = format(bytes/Math.pow(base,4))
+
+}
+
+document.querySelectorAll(".key").forEach(key=>{
+
+key.addEventListener("click",()=>{
+
+let value = key.innerText
+
+if(value==="BORRAR"){
+
+Object.values(inputs).forEach(i=>{
+i.value=""
+})
+
+return
+}
+
+if(!activeInput) return
+
+if(value==="⌫"){
+
+activeInput.value = activeInput.value.slice(0,-1)
+convert(activeInput.id)
+return
+
+}
+
+if(replaceOnNextInput){
+activeInput.value = value
+replaceOnNextInput = false
+}else{
+activeInput.value += value
+}
+
+convert(activeInput.id)
+
+})
+
+})
+
+document.getElementById("binario").onclick=()=>{
+base=1024
+document.getElementById("binario").classList.add("active")
+document.getElementById("decimal").classList.remove("active")
+}
+
+document.getElementById("decimal").onclick=()=>{
+base=1000
+document.getElementById("decimal").classList.add("active")
+document.getElementById("binario").classList.remove("active")
+}
+
+document.addEventListener('dblclick',function(e){
+e.preventDefault()
+})
+
+document.addEventListener('gesturestart',function(e){
+e.preventDefault()
+})
+
+</script>
+
+</body>
+</html>
+
