@@ -1,10 +1,13 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Conversor de almacenamiento</title>
@@ -22,88 +25,99 @@ font-family:Arial, Helvetica, sans-serif;
 
 body{
 margin:0;
-padding:15px;
 background:#0f172a;
 color:white;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
 .container{
+
 width:100%;
 max-width:420px;
-margin:auto;
+height:100vh;
+
+display:flex;
+flex-direction:column;
+
+padding:12px;
 background:#1e293b;
-border-radius:15px;
-padding:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.4);
+
 }
 
 h1{
 text-align:center;
-font-size:22px;
-margin-bottom:15px;
+font-size:20px;
+margin:5px 0 10px 0;
 }
 
 .switch{
 display:flex;
 justify-content:center;
 gap:10px;
-margin-bottom:15px;
+margin-bottom:8px;
 }
 
 .switch button{
-padding:8px 14px;
+padding:6px 12px;
 border:none;
 border-radius:6px;
 cursor:pointer;
 background:#334155;
 color:white;
-font-size:14px;
+font-size:13px;
 }
 
 .switch button.active{
 background:#3b82f6;
 }
 
+.fields{
+flex:1;
+}
+
 .field{
-margin-bottom:10px;
+margin-bottom:5px;
 }
 
 .field label{
-font-size:12px;
+font-size:11px;
 opacity:0.7;
 }
 
 .field input{
 width:100%;
-padding:12px;
+padding:8px;
 border-radius:6px;
 border:none;
 background:#0f172a;
 color:white;
-font-size:16px;
-margin-top:4px;
+font-size:15px;
+margin-top:2px;
 border:2px solid transparent;
 }
 
 .field input.active{
 border-color:#3b82f6;
-box-shadow:0 0 6px #3b82f6;
 }
 
 .keypad{
-margin-top:15px;
+
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:10px;
+gap:8px;
+
 }
 
 .key{
-padding:18px;
+padding:14px;
 background:#334155;
 border-radius:8px;
 text-align:center;
 cursor:pointer;
-font-size:22px;
+font-size:20px;
 user-select:none;
 }
 
@@ -131,12 +145,16 @@ background:#ef4444;
 <button id="decimal">Decimal (1000)</button>
 </div>
 
+<div class="fields">
+
 <div class="field"><label>Bits</label><input id="bits" readonly></div>
 <div class="field"><label>Bytes</label><input id="bytes" readonly></div>
 <div class="field"><label>KB</label><input id="kb" readonly></div>
 <div class="field"><label>MB</label><input id="mb" readonly></div>
 <div class="field"><label>GB</label><input id="gb" readonly></div>
 <div class="field"><label>TB</label><input id="tb" readonly></div>
+
+</div>
 
 <div class="keypad">
 
@@ -198,11 +216,7 @@ replaceOnNextInput = true
 }
 
 Object.values(inputs).forEach(input=>{
-
-input.addEventListener("click",()=>{
-setActive(input)
-})
-
+input.addEventListener("click",()=>setActive(input))
 })
 
 function convert(unit){
@@ -241,11 +255,9 @@ let value = key.innerText
 
 if(value==="BORRAR"){
 
-Object.values(inputs).forEach(i=>{
-i.value=""
-})
-
+Object.values(inputs).forEach(i=>i.value="")
 return
+
 }
 
 if(!activeInput) return
@@ -259,10 +271,10 @@ return
 }
 
 if(replaceOnNextInput){
-activeInput.value = value
-replaceOnNextInput = false
+activeInput.value=value
+replaceOnNextInput=false
 }else{
-activeInput.value += value
+activeInput.value+=value
 }
 
 convert(activeInput.id)
@@ -287,7 +299,4 @@ document.getElementById("binario").classList.remove("active")
 
 </body>
 </html>
-
-
-
 
