@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -30,40 +31,35 @@ align-items:center;
 }
 
 .container{
-
 width:100%;
 max-width:420px;
 height:100vh;
-
 display:flex;
 flex-direction:column;
-
-padding:8px;
+padding:6px;
 background:#1e293b;
-
 }
 
 h1{
 text-align:center;
-font-size:18px;
-margin:2px 0 6px 0;
+font-size:16px;
+margin:2px 0 4px 0;
 }
 
 .switch{
 display:flex;
 justify-content:center;
-gap:8px;
-margin-bottom:6px;
+gap:6px;
+margin-bottom:4px;
 }
 
 .switch button{
-padding:4px 10px;
+padding:3px 8px;
 border:none;
 border-radius:6px;
-cursor:pointer;
 background:#334155;
 color:white;
-font-size:12px;
+font-size:11px;
 }
 
 .switch button.active{
@@ -75,23 +71,26 @@ flex:1;
 }
 
 .field{
-margin-bottom:3px;
+display:flex;
+align-items:center;
+margin-bottom:2px;
+gap:4px;
 }
 
 .field label{
+width:45px;
 font-size:10px;
 opacity:0.7;
 }
 
 .field input{
-width:100%;
-padding:6px;
+flex:1;
+padding:4px;
 border-radius:6px;
 border:none;
 background:#0f172a;
 color:white;
-font-size:14px;
-margin-top:1px;
+font-size:13px;
 border:2px solid transparent;
 }
 
@@ -100,20 +99,17 @@ border-color:#3b82f6;
 }
 
 .keypad{
-
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:6px;
-
+gap:4px;
 }
 
 .key{
-padding:12px;
+padding:10px;
 background:#334155;
-border-radius:8px;
+border-radius:6px;
 text-align:center;
-cursor:pointer;
-font-size:18px;
+font-size:16px;
 user-select:none;
 }
 
@@ -178,11 +174,11 @@ background:#ef4444;
 
 <script>
 
-let base = 1024
-let activeInput = null
-let replaceOnNextInput = false
+let base=1024
+let activeInput=null
+let replaceOnNextInput=false
 
-const inputs = {
+const inputs={
 bits:document.getElementById("bits"),
 bytes:document.getElementById("bytes"),
 kb:document.getElementById("kb"),
@@ -295,6 +291,4 @@ document.getElementById("binario").classList.remove("active")
 
 </body>
 </html>
-
-
 
